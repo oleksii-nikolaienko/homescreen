@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <!--<meta http-equiv="refresh" content="86400">-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+    <script language=javascript src="sun.js"></script>
+    <script language=javascript>
+      var timerInterval = setInterval(function(){ timer() }, 1000);
+      function timer() {
+          var d = new Date();
+          var t = d.toLocaleTimeString();
+          document.getElementById("timer").innerHTML = t;
+      }
+      var dimmerInterval = setInterval(function(){ dim() }, 120000);
+      function dim() {
+          var dimmer = document.getElementById("dimmer");
+          var minopacity = 0.2;
+          var maxopacity = 0.8;
+          var dimrange = 60*60*1000;
+          var sunrise = new Date().sunrise(60.341463, 5.35832993)*1;
+          var sunset = new Date().sunset(60.341463, 5.35832993)*1;
+          var now = new Date()*1;
+          if ((now > sunrise + dimrange/2) && ((now < sunset - dimrange/2))) {  //day
+            dimmer.style.opacity = minopacity;
+            document.getElementById("log").innerHTML = "day, " + dimmer.style.opacity;
+          } else if ((now > sunset + dimrange/2) || ((now < sunrise - dimrange/2))) {  //night
+            dimmer.style.opacity = maxopacity;
+            document.getElementById("log").innerHTML = "night, " + dimmer.style.opacity;
+          } else if ((now > sunrise - dimrange/2) && ((now < sunrise + dimrange/2))) {  //sunrise
+            dimmer.style.opacity = minopacity + (maxopacity-minopacity)*(sunrise + dimrange/2 - now)/dimrange;
+            document.getElementById("log").innerHTML = "sunrise, " + dimmer.style.opacity;
+          } else if ((now > sunset - dimrange/2) && ((now < sunset + dimrange/2))) {  //sunset
+            dimmer.style.opacity = maxopacity - (maxopacity-minopacity)*(sunset + dimrange/2 - now)/dimrange;
+            document.getElementById("log").innerHTML = "sunset, " + dimmer.style.opacity;
+          }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- 1024 x 600 -->
+    <table border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td colspan="3">
+          <iframe name="meteogram" id="meteogram" frameborder="0" border="0" cellspacing="0" style="border-style:none; width:1012px; height:350px;" src="meteogram.html"></iframe>
+        </td>
+      </tr>
+      <tr valign="top">
+        <td name="timer" id="timer" style="width: 245px; font-size: 86px; font-family: 'Open Sans Condensed', sans-serif; line-height: 1; color: #000000;"></td>
+        <td>
+          <iframe name="schedule" id="schedule" frameborder="0" border="0" cellspacing="0" style="border-style:none; width:430px;" src="schedule.html"></iframe>
+        </td>
+        <td>
+          <iframe name="precipitation" id="precipitation" frameborder="0" border="0" cellspacing="0" style="border-style:none; width:319px;" src="precipitation.html"></iframe>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <div name="log" id="log"></div>
+        </td>
+      </tr>
+    </table>
+    <div name="dimmer" id="dimmer" style="position:fixed; width:100%; height:100%; top:0; left:0; background:#000; opacity:0.2;"></div>
+  </body>
+</html>
