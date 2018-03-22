@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta charset="UTF-8">
     <!--<meta http-equiv="refresh" content="86400">-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
     <script language=javascript src="sun.js"></script>
@@ -33,27 +34,33 @@
             document.getElementById("log").innerHTML = "sunset, " + dimmer.style.opacity;
           }
       }
+      window.onload = function () {
+          var sunrise = new Date().sunrise(60.341463, 5.35832993).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          var sunset = new Date().sunset(60.341463, 5.35832993).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          document.getElementById("sun").innerHTML = "<div>&uarr;"+sunrise+"</div><div>&darr;"+sunset+"</div>";
+      }
     </script>
   </head>
   <body>
     <!-- 1024 x 600 -->
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td colspan="3">
+        <td colspan="4">
           <iframe name="meteogram" id="meteogram" frameborder="0" border="0" cellspacing="0" style="border-style:none; width:1012px; height:350px;" src="meteogram.html"></iframe>
         </td>
       </tr>
       <tr valign="top">
-        <td name="timer" id="timer" style="width: 245px; font-size: 86px; font-family: 'Open Sans Condensed', sans-serif; line-height: 1; color: #000000;"></td>
+        <td name="timer" id="timer" style="width:240px; font-size: 86px; font-family: 'Open Sans Condensed', sans-serif; line-height:100%; color: #000000;"></td>
+        <td name="sun" id="sun" style="width:40px; font-size: 24px; font-family: 'Open Sans Condensed', sans-serif; line-height:180%; color: #000000;"></td>
         <td>
-          <iframe name="schedule" id="schedule" frameborder="0" border="0" cellspacing="0" style="border-style:none; width:430px;" src="schedule.html"></iframe>
+          <iframe name="schedule" id="schedule" frameborder="0" border="0" cellspacing="0" style="border-style:none; width:440px;" src="schedule.html"></iframe>
         </td>
         <td>
-          <iframe name="precipitation" id="precipitation" frameborder="0" border="0" cellspacing="0" style="border-style:none; width:319px;" src="precipitation.html"></iframe>
+          <iframe name="precipitation" id="precipitation" frameborder="0" border="0" cellspacing="0" style="border-style:none; width:270px;" src="precipitation.html"></iframe>
         </td>
       </tr>
       <tr>
-        <td colspan="3">
+        <td colspan="4">
           <div name="log" id="log"></div>
         </td>
       </tr>
