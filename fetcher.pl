@@ -55,7 +55,7 @@ sub fetchPrecipitation {
         print file '<link href=index-16ce932d0d6d6406e76039f4b8ebb2af.css rel="stylesheet"></head>', "\n<body>";
         print file '<span class="pulse-icon"></span>';
         if ($html =~ /(<svg class="now-graph__svg".+?90<\/span><\/span><\/div>)/) {
-            print file '<div class="now-graph" style="width:180px;">', $1, '</div>'
+            print file '&nbsp;&nbsp;Precipitation forecast:<div class="now-graph" style="width:180px;">', $1, '</div>'
         } else {
             print file '&nbsp;&nbsp;No precipitation expected next 90 minutes';
         }
@@ -129,6 +129,7 @@ sub fetchSchedule {
                 } else {
                     $class = '<span>';
                 }
+                next if (($#times >= 0) && ($times[$#times] eq $class.$$route{"DisplayTime"}.'</span>')); #bybanen duplicated entries
                 push @times, $class.$$route{"DisplayTime"}.'</span>';
                 last if ++$nItems >= $itemsLimit;
             }

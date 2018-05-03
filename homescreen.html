@@ -34,10 +34,16 @@
             document.getElementById("log").innerHTML = "sunset, " + dimmer.style.opacity;
           }
       }
-      window.onload = function () {
+      var sunriseInterval = setInterval(function(){ setSun() }, 86400000);
+      function setSun () {
           var sunrise = new Date().sunrise(60.341463, 5.35832993).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
           var sunset = new Date().sunset(60.341463, 5.35832993).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
           document.getElementById("sun").innerHTML = "<div>&uarr;"+sunrise+"</div><div>&darr;"+sunset+"</div>";
+      }
+      window.onload = function () {
+          timer();
+          dim();
+          setSun();
       }
     </script>
   </head>
